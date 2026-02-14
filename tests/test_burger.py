@@ -136,8 +136,10 @@ class TestBurger:
         burger.add_ingredient(ingredient)
         
         # Попытка удалить несуществующий индекс должна вызвать IndexError
-        with pytest.raises(IndexError):
+        with pytest.raises(IndexError) as excinfo:
             burger.remove_ingredient(1)
+
+        assert isinstance(excinfo.value, IndexError)
 
     def test_move_ingredient_with_invalid_indices(self):
         # Проверка перемещения ингредиента с недопустимыми индексами.
@@ -146,6 +148,8 @@ class TestBurger:
         burger.add_ingredient(ingredient)
         
         # Попытка переместить несуществующий индекс должна вызвать IndexError
-        with pytest.raises(IndexError):
+        with pytest.raises(IndexError) as excinfo:
             burger.move_ingredient(1, 0)
+
+        assert isinstance(excinfo.value, IndexError)
 

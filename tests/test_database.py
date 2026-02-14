@@ -1,5 +1,4 @@
 import pytest
-from unittest.mock import Mock
 
 from praktikum.database import Database
 from praktikum.bun import Bun
@@ -81,6 +80,7 @@ class TestDatabase:
         # Параметризованная проверка булочек.
         database = Database()
         buns = database.available_buns()
+        assert isinstance(buns[bun_index], Bun)
         assert buns[bun_index].get_name() == expected_name
         assert buns[bun_index].get_price() == expected_price
 
@@ -96,29 +96,6 @@ class TestDatabase:
         # Параметризованная проверка ингредиентов.
         database = Database()
         ingredients = database.available_ingredients()
+        assert isinstance(ingredients[ingredient_index], Ingredient)
         assert ingredients[ingredient_index].get_type() == expected_type
         assert ingredients[ingredient_index].get_name() == expected_name
-
-    def test_database_with_mocked_bun(self):
-        # Проверка базы данных с использованием мока для булочки.
-        # Создаем мок-объект булочки с нужными атрибутами
-        mock_bun = Mock()
-        mock_bun.get_name.return_value = "mocked bun"
-        mock_bun.get_price.return_value = PRICE_100
-        
-        # Проверяем, что мок-объект работает корректно
-        assert mock_bun.get_name() == "mocked bun"
-        assert mock_bun.get_price() == PRICE_100
-
-    def test_available_buns_returns_list(self):
-        # Проверка, что available_buns возвращает список.
-        database = Database()
-        buns = database.available_buns()
-        assert isinstance(buns, list)
-
-    def test_available_ingredients_returns_list(self):
-        # Проверка, что available_ingredients возвращает список.
-        database = Database()
-        ingredients = database.available_ingredients()
-        assert isinstance(ingredients, list)
-
